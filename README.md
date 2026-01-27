@@ -1,6 +1,6 @@
 # iCommerce Skills
 
-A collection of skills for operating the StateSet iCommerce engine (/home/dom/stateset-icommerce) and ecommerce automation workflows (/home/dom/next-temporal).
+A collection of skills for operating the StateSet iCommerce engine.
 
 Skills at a glance: 25 iCommerce engine.
 
