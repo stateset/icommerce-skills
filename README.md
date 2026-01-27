@@ -11,7 +11,7 @@ Skills at a glance: 25 iCommerce engine.
 Global install (recommended):
 
 ```bash
-npm install -g /home/dom/icommerce-skills
+npm install -g @stateset/icommerce-skills
 icommerce-skills list
 icommerce-skills install
 ```
