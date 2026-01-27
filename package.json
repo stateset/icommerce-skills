@@ -1,0 +1,24 @@
+{
+  "name": "icommerce-skills",
+  "version": "0.1.0",
+  "description": "StateSet iCommerce skills for Claude Code agents.",
+  "license": "UNLICENSED",
+  "private": true,
+  "bin": {
+    "icommerce-skills": "bin/icommerce-skills.js"
+  },
+  "files": [
+    "skills/",
+    "bin/icommerce-skills.js",
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
+  "scripts": {
+    "list": "node bin/icommerce-skills.js list",
+    "install:claude": "node bin/icommerce-skills.js install"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
