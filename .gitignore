@@ -5,8 +5,7 @@ node_modules
 
 .claude/
 
+internal/
+
 skills/*.zip
 skills/*.zip.part
-
-internal/*.zip
-internal/*.zip.part
