@@ -22,8 +22,11 @@ Reference map for StateSet MCP tools, grouped by domain with example payloads.
 
 ## Usage
 
+- CLI: `stateset --help` to list available MCP tool commands.
+- MCP tools: all `list_*`, `get_*`, `create_*`, `update_*` tools documented in references.
+
 Use this skill when you need to:
-- Construct MCP tool calls.
+- Construct MCP tool calls for commerce-orders, commerce-customers, or commerce-inventory.
 - Verify parameter names and shapes.
 - Debug tool failures.
 

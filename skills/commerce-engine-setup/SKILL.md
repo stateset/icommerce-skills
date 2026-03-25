@@ -47,7 +47,7 @@ stateset-autonomous start --db ./.stateset/commerce.db
 ## Output
 
 ```json
-{"status":"ok","db":"./store.db","sync":"disabled","autonomous":"stopped","cli_version":"1.4.0","tables":12}
+{"status":"ok","db":"./store.db","sync":"disabled","autonomous":"stopped","cli_version":"1.4.0","tables":12,"customer_id":"cust_001","email":"admin@example.com"}
 ```
 
 ## Present Results to User
@@ -62,7 +62,7 @@ stateset-autonomous start --db ./.stateset/commerce.db
 - CLI not found: re-run `npm link` or install `@stateset/cli` globally.
 - Database locked: close other processes using the DB file; check `lsof` on the `.db` path.
 - Sequencer unreachable: verify Docker services and `SEQUENCER_URL` in `.env`.
-- Seed script fails: ensure `--db` path exists and the `customers` table is initialized.
+- Seed script fails: ensure `--db` path exists and the `customers` table with id and email columns is initialized.
 
 ## Error Codes
 

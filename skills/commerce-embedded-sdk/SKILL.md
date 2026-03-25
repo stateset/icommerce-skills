@@ -46,7 +46,7 @@ stateset embedded sync --db /tmp/commerce.db --sequencer https://seq.stateset.io
 ## Output
 
 ```json
-{"status":"ok","order_number":"ORD-12345","customer_id":"cust_123","db_path":"/tmp/commerce.db","sdk_version":"0.9.4"}
+{"status":"ok","order_number":"ORD-12345","customer_id":"cust_123","db_path":"/tmp/commerce.db","sdk_version":"0.9.4","email":"cust@example.com","sku":"WIDGET-001","amount":150.00}
 ```
 
 ## Present Results to User

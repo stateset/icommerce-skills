@@ -43,3 +43,13 @@ stateset-sync rebase
 | Last-Write-Wins | Timestamp-based, newest wins |
 | Manual | Agent or user resolves via `resolve_conflict` |
 | Custom | Org-specific merge rules |
+
+## Sync Status Fields
+
+| Field | Description |
+|-------|-------------|
+| `last_push` | Timestamp of last successful push |
+| `last_pull` | Timestamp of last successful pull |
+| `pending_events` | Events awaiting push to sequencer |
+| `conflicts` | Unresolved conflict count |
+| `sequence_number` | Current local sequence position |

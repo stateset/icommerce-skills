@@ -53,7 +53,7 @@ stateset --db ./store.db "close gl period period=2026-02" --apply
 ## Output
 
 ```json
-{"status":"posted","journal_entry_id":"JE-2025-0100","period":"2025-01","total_debits":1500.00,"total_credits":1500.00}
+{"status":"posted","journal_entry_id":"JE-2025-0100","period":"2025-01","total_debits":1500.00,"total_credits":1500.00,"amount":1500.00}
 ```
 
 ## Present Results to User

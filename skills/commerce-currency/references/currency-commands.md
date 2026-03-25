@@ -47,3 +47,5 @@ stateset --apply "enable currencies EUR GBP JPY"
 - Rates are stored as directional pairs (USD->EUR is separate from EUR->USD).
 - Rate staleness threshold is configurable per store; default is 24 hours.
 - Use `format_currency` to apply locale-specific symbols and grouping separators.
+- All conversion results include `rate_date` for audit trail.
+- Multi-currency carts display line item prices in the customer's preferred currency.

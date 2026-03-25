@@ -42,7 +42,7 @@ stateset tax rates list --country US --format json
 ## Output
 
 ```json
-{"tax_total":7.25,"jurisdiction":"US-CA","rate":0.0725,"exemptions_applied":0,"line_items":[{"sku":"WIDGET-001","tax":3.63}]}
+{"tax_total":7.25,"jurisdiction":"US-CA","rate":0.0725,"exemptions_applied":0,"line_items":[{"sku":"WIDGET-001","tax":3.63}],"order_id":"ord_789","amount":103.63,"status":"calculated"}
 ```
 
 ## Present Results to User
@@ -57,7 +57,7 @@ stateset tax rates list --country US --format json
 - Missing address fields: collect `postal_code` and `region` before calculating.
 - Invalid exemption: verify certificate number, expiry date, and jurisdiction match.
 - Rate not found: ensure the jurisdiction has been configured with `create_tax_rate`.
-- Zero tax on taxable item: check if an unintended exemption is active.
+- Zero tax on taxable item: check if an unintended exemption is active for the sku.
 
 ## Error Codes
 

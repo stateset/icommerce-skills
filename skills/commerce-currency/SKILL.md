@@ -42,7 +42,7 @@ stateset "list enabled currencies"
 ## Output
 
 ```json
-{"amount":100.00,"from":"USD","to":"EUR","converted":92.00,"rate":0.9200,"rate_date":"2025-01-15T12:00:00Z"}
+{"amount":100.00,"from":"USD","to":"EUR","converted":92.00,"rate":0.9200,"rate_date":"2025-01-15T12:00:00Z","order_id":"ord_456","status":"converted","sku":"WIDGET-001"}
 ```
 
 ## Present Results to User
@@ -57,7 +57,7 @@ stateset "list enabled currencies"
 - Rate missing: set a rate with `set_exchange_rate` or enable the currency pair.
 - Precision issues: use correct decimal places per currency (e.g., 0 for JPY, 2 for USD).
 - Stale rates: verify `rate_date` and update if older than acceptable threshold.
-- Base currency change: existing prices are not auto-converted; recalculate manually.
+- Base currency change: existing prices and amount values are not auto-converted; recalculate manually.
 
 ## Error Codes
 

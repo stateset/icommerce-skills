@@ -47,7 +47,7 @@ stateset storefront dev --project my-storefront --port 3000
 ## Output
 
 ```json
-{"status":"created","project":"my-storefront","template":"nextjs","path":"/home/user/my-storefront","pages":["index","products","cart","checkout"],"db_path":"./commerce.db","api_key_status":"configured"}
+{"status":"created","project":"my-storefront","template":"nextjs","path":"/home/user/my-storefront","pages":["index","products","cart","checkout"],"db_path":"./commerce.db","api_key_status":"configured","customer_id":"cust_001","email":"admin@example.com","sku":"WIDGET-001","tracking":"enabled"}
 ```
 
 ## Present Results to User
@@ -62,7 +62,7 @@ stateset storefront dev --project my-storefront --port 3000
 - Missing Node dependencies: run `npm install` in the project directory.
 - Database errors: confirm `.env` `DATABASE_PATH` points to a writable file.
 - Port conflict: change the dev server port in `package.json` or use `--port`.
-- Template not found: verify the template name matches available options.
+- Template not found: verify the template name matches available options and check status in the scaffold log.
 
 ## Error Codes
 

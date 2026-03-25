@@ -53,7 +53,7 @@ stateset --db ./store.db "get customer credit summary customer_id=cust_123"
 ## Output
 
 ```json
-{"status":"credit_check","customer_id":"cust_123","approved":true,"credit_limit":10000.00,"available_credit":7500.00,"order_amount":2000.00}
+{"status":"credit_check","customer_id":"cust_123","approved":true,"credit_limit":10000.00,"available_credit":7500.00,"order_amount":2000.00,"email":"cust@example.com","amount":2000.00}
 ```
 
 ## Present Results to User

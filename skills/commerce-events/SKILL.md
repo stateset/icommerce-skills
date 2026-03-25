@@ -43,7 +43,7 @@ stateset-events outbox --status pending --limit 20
 ## Output
 
 ```json
-{"events":[{"event_id":"evt_001","event_type":"order.created","entity_type":"order","entity_id":"ord_123","created_at":"2025-01-15T10:30:00Z"}],"total":1}
+{"events":[{"event_id":"evt_001","event_type":"order.created","entity_type":"order","entity_id":"ord_123","created_at":"2025-01-15T10:30:00Z","status":"delivered"}],"total":1}
 ```
 
 ## Present Results to User

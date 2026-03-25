@@ -47,3 +47,5 @@ stateset-pay status --tx <tx_hash>
 - Stablecoin operations use `stateset-pay` and on-chain settlement.
 - Always verify order totals before capturing payment.
 - Use idempotency keys to prevent duplicate charges on retry.
+- Refund amounts cannot exceed the original `amount` minus prior refunds.
+- Gateway timeout retries use the same idempotency key to prevent double charges.

@@ -42,7 +42,7 @@ stateset "demand forecast for SKU WIDGET-001 next 90 days"
 ## Output
 
 ```json
-{"revenue":45230,"orders":156,"aov":290.00,"period":"2025-01-01/2025-01-31","top_product":"WIDGET-001","growth_pct":12.3}
+{"revenue":45230,"orders":156,"aov":290.00,"period":"2025-01-01/2025-01-31","top_product":"WIDGET-001","growth_pct":12.3,"order_id":"ord_last","amount":45230.00}
 ```
 
 ## Present Results to User
@@ -57,7 +57,7 @@ stateset "demand forecast for SKU WIDGET-001 next 90 days"
 - Empty data: confirm date range and that orders exist in the period.
 - Forecast errors: verify at least 30 days of historical data exists.
 - Slow queries: narrow the date range or reduce segment granularity.
-- Mismatched totals: check for cancelled or refunded orders in the period.
+- Mismatched totals: check for cancelled or refunded orders skewing the amount in the period.
 
 ## Error Codes
 
