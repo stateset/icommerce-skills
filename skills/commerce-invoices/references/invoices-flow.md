@@ -53,3 +53,58 @@ stateset --apply "void invoice INV-456"
 | 31-60 days | 31-60 days past due |
 | 61-90 days | 61-90 days past due |
 | 90+ days | Over 90 days past due |
+
+## Line Item Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `line_item_id` | string | Unique line identifier |
+| `description` | string | Item or service description |
+| `quantity` | number | Number of units |
+| `unit_price` | number | Price per unit |
+| `amount` | number | quantity * unit_price |
+| `tax_rate` | number | Tax rate applied to this line |
+| `gl_account_id` | string | General ledger posting account |
+
+## Payment Recording
+
+```bash
+# Record full payment
+stateset --apply "record invoice payment INV-123 amount 10000 via credit_card"
+
+# Record partial payment
+stateset --apply "record invoice payment INV-123 amount 3000 via bank_transfer"
+
+# Record payment with reference number
+stateset --apply "record invoice payment INV-123 amount 5000 via check ref CHK-4567"
+```
+
+## Payment Methods
+
+| Method | `payment_via` Value | Notes |
+|--------|-------------------|-------|
+| Bank Transfer | `bank_transfer` | ACH or wire transfer |
+| Credit Card | `credit_card` | Card-on-file charge |
+| Check | `check` | Include ref number |
+| Cash | `cash` | Manual reconciliation |
+| Store Credit | `store_credit` | Deducted from balance |
+
+## Dunning Schedule
+
+| Days Overdue | Action | Template |
+|-------------|--------|----------|
+| 1 | Friendly reminder email | `reminder_1` |
+| 15 | Follow-up email | `reminder_2` |
+| 30 | Urgent notice | `reminder_3` |
+| 60 | Final warning | `final_warning` |
+| 90 | Escalate to collections | `collections_notice` |
+
+## Error Codes
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `INVOICE_NOT_FOUND` | Invalid invoice_id | Verify ID with `list_invoices` |
+| `ALREADY_PAID` | Invoice balance is zero | No further payment needed |
+| `OVERPAYMENT` | Amount exceeds balance due | Issue credit memo for difference |
+| `INVOICE_VOIDED` | Cannot modify voided invoice | Create a new invoice instead |
+| `INVALID_PAYMENT_METHOD` | Unsupported payment_via value | Use a supported payment method |

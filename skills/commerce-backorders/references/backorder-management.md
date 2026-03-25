@@ -64,3 +64,43 @@ Process backorders in priority order:
 - Total backorders by status
 - Overdue backorders (past promised date)
 - Average days outstanding
+
+## Notification Events
+
+| Event | Trigger | Recipient |
+|-------|---------|-----------|
+| BackorderCreated | New backorder logged | Customer, Sales Rep |
+| AllocationConfirmed | Inventory reserved against backorder | Warehouse, Customer |
+| ExpectedDateChanged | Supplier updates ETA | Customer, Sales Rep |
+| PromisedDateBreached | Current date passes promised date | Customer Service, Manager |
+| PartialShipment | Some quantity shipped, remainder pending | Customer |
+| BackorderFulfilled | Entire quantity shipped | Customer, Sales Rep |
+| AllocationExpired | Reserved stock released after timeout | Purchasing, Warehouse |
+
+## Common Operations
+
+```bash
+stateset --apply "create backorder for order ORD-2025-1234 sku WIDGET-001 quantity 50"
+stateset --apply "allocate 25 WIDGET-001 to backorder BO-2025-0010 from PO PO-2025-0200"
+stateset --apply "fulfill backorder BO-2025-0010 quantity 25"
+stateset "list backorders status pending priority high"
+stateset "backorder aging report"
+stateset --apply "cancel backorder BO-2025-0010 reason customer_cancelled"
+```
+
+## Aging Buckets
+
+| Bucket | Days Outstanding | Action Required |
+|--------|-----------------|-----------------|
+| Current | 0-14 days | Standard monitoring |
+| Aging | 15-30 days | Contact supplier for update |
+| Overdue | 31-60 days | Escalate to purchasing manager |
+| Critical | 60+ days | Customer outreach, consider alternatives |
+
+## Practical Notes
+
+- Backorders with **Critical** priority bypass the standard allocation queue and are filled first when stock arrives.
+- When a PO is partially received, allocations are filled in priority order until incoming quantity is exhausted.
+- Expired allocations automatically return reserved stock to the available pool; a new allocation must be created.
+- Customers can opt out of backorder fulfillment, which cancels the backorder and triggers a refund for any prepaid amount.
+- The `quantity_remaining` field is computed: `quantity_ordered - quantity_fulfilled`.

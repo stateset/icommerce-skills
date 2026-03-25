@@ -51,3 +51,69 @@ stateset-direct products create <name> <sku> <price>
 | `sku` | string | Stock keeping unit (unique) |
 | `price` | number | Variant-specific price |
 | `attributes` | object | Size, color, material, etc. |
+| `weight` | number | Weight in grams |
+| `inventory_tracked` | boolean | Whether inventory is managed |
+| `barcode` | string | UPC, EAN, or ISBN |
+
+## Product Status Transitions
+
+| Current Status | Allowed Next Status |
+|---------------|-------------------|
+| `draft` | `active` |
+| `active` | `archived`, `draft` |
+| `archived` | `active` |
+
+## Common Attribute Keys
+
+| Key | Values (Examples) | Used For |
+|-----|-------------------|----------|
+| `size` | XS, S, M, L, XL, XXL | Apparel |
+| `color` | Red, Blue, Black, White | Apparel, accessories |
+| `material` | Cotton, Polyester, Leather | Apparel, furniture |
+| `capacity` | 64GB, 128GB, 256GB | Electronics |
+| `flavor` | Vanilla, Chocolate, Strawberry | Food & beverage |
+
+## Error Handling
+
+| Error Code | Meaning | Resolution |
+|------------|---------|------------|
+| `DUPLICATE_SKU` | SKU already exists | Use a unique SKU or update the existing product |
+| `DUPLICATE_SLUG` | URL slug already taken | Provide a different slug |
+| `PRODUCT_NOT_FOUND` | Product ID does not exist | Verify the product ID |
+| `VARIANT_LIMIT_EXCEEDED` | Max 100 variants per product | Consolidate or split into separate products |
+| `INVALID_PRICE` | Price must be >= 0 | Correct the price value |
+
+## Bulk Operations
+
+```bash
+stateset --apply "import products from csv /path/to/products.csv"
+stateset --apply "bulk update prices from csv /path/to/prices.csv"
+stateset --apply "archive products where status active last_sold_before 2025-01-01"
+stateset "export products format csv status active"
+```
+
+## Search and Filtering
+
+```bash
+stateset "list products status active sort price asc"
+stateset "list products where price > 50 and price < 100"
+stateset "search products 'wireless headphones'"
+stateset "list products tag 'seasonal' limit 25"
+```
+
+## Events Emitted
+
+| Event | Trigger |
+|-------|---------|
+| `product.created` | New product created |
+| `product.updated` | Product fields modified |
+| `product.archived` | Product archived |
+| `product.variant_added` | New variant added |
+| `product.price_changed` | Price updated on product or variant |
+
+## Integration Notes
+
+- Product images are managed separately via `upload_product_image` and stored in CDN.
+- The `slug` field is auto-generated from `name` if not provided, but must be unique.
+- Archiving a product hides it from storefront but preserves order history references.
+- Variant `price` overrides the parent product `price` when set.

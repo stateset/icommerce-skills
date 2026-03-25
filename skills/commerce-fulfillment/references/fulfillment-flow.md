@@ -61,3 +61,45 @@ stateset --apply "complete pick PICK-001 quantity 10"
 stateset --apply "add carton to pack PACK-001 dimensions 12x10x8 weight 5.2"
 stateset --apply "complete ship SHIP-001 carrier UPS tracking 1Z999AA10123456784"
 ```
+
+## MCP Tool Reference
+
+| Tool | Action | Requires --apply |
+|------|--------|-----------------|
+| `create_wave` | Create a pick wave from orders | Yes |
+| `release_wave` | Release wave for picking | Yes |
+| `complete_pick` | Mark pick task complete with quantity | Yes |
+| `create_pack_task` | Create packing task from picks | Yes |
+| `add_carton` | Add carton to pack task | Yes |
+| `complete_pack` | Mark pack task complete | Yes |
+| `create_ship_task` | Create ship task from packed cartons | Yes |
+| `generate_label` | Generate carrier shipping label | Yes |
+| `complete_ship` | Record carrier handoff and tracking | Yes |
+| `list_waves` | List all waves and their statuses | No |
+| `get_wave_progress` | Completion percentage for a wave | No |
+
+## Fulfillment Status Flow
+
+```
+Pending -> Allocated -> Picking -> Picked -> Packing -> Packed -> Shipping -> Shipped -> Delivered
+                                                                                 \-> Exception
+```
+
+## Error Handling
+
+| Error | Cause | Resolution |
+|-------|-------|------------|
+| `WAVE_EMPTY` | No orders assigned to wave | Add orders before releasing |
+| `LOCATION_NOT_FOUND` | Invalid warehouse location | Verify location_id in WMS |
+| `SHORT_PICK` | Insufficient stock at location | Trigger replenishment or reassign |
+| `LABEL_GENERATION_FAILED` | Carrier API error | Retry or switch carrier service |
+| `CARTON_OVERWEIGHT` | Exceeds carrier weight limit | Split into multiple cartons |
+
+## Carrier Integration
+
+| Carrier | Service Levels | Tracking Prefix |
+|---------|---------------|-----------------|
+| UPS | Ground, 2Day, NextDay | `1Z` |
+| FedEx | Ground, Express, Priority | `7489` |
+| USPS | Priority, First-Class, Parcel | `9400` |
+| DHL | Express, Economy | `JJD` |

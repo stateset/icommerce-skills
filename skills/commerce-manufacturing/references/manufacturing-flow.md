@@ -60,3 +60,53 @@ stateset --apply "complete work order WO-123 output 98 scrap 2"
 | `completed_quantity` | Actual output |
 | `scrap_quantity` | Units scrapped |
 | `due_date` | Production due date |
+
+## Quality Control Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `inspection_id` | string | Unique QC inspection identifier |
+| `work_order_id` | string | Associated work order |
+| `inspector` | string | Person performing inspection |
+| `sample_size` | number | Units inspected |
+| `pass_count` | number | Units passing QC |
+| `fail_count` | number | Units failing QC |
+| `defect_codes` | array | List of defect classifications |
+| `disposition` | string | accept, rework, scrap |
+
+## Units of Measure
+
+| UOM | Code | Use Case |
+|-----|------|----------|
+| Each | `ea` | Discrete parts and assemblies |
+| Kilogram | `kg` | Raw materials by weight |
+| Liter | `L` | Liquid components |
+| Meter | `m` | Wire, tubing, fabric |
+| Square Meter | `m2` | Sheet materials |
+| Pair | `pr` | Matched component sets |
+
+## Work Order Status Commands
+
+```bash
+# List all open work orders
+stateset "list work orders status started"
+
+# Get work order details including component consumption
+stateset "get work order WO-123"
+
+# Record quality inspection
+stateset --apply "inspect work order WO-123 pass 95 fail 3 scrap 2"
+
+# Log material consumption against a work order
+stateset --apply "consume component PART-001 qty 200 from work order WO-123"
+```
+
+## Error Codes
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `BOM_NOT_ACTIVE` | BOM is draft or archived | Activate BOM before creating WO |
+| `INSUFFICIENT_MATERIAL` | Component stock below requirement | Procure materials or adjust qty |
+| `WO_ALREADY_COMPLETED` | Cannot modify completed work order | Create a new work order |
+| `INVALID_SCRAP_QTY` | Scrap exceeds target quantity | Verify output + scrap <= target |
+| `COMPONENT_NOT_IN_BOM` | SKU not listed in BOM | Add component to BOM first |

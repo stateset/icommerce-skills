@@ -53,3 +53,61 @@ stateset-autonomous workflows cancel WFI-001
 - Start with `--verbose` for detailed logging.
 - Capture `job_run_id` and `workflow_instance_id` for traceability.
 - Review event log with `stateset-events list --entity-type job_run`.
+
+## Scheduled Job Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `job_id` | string | Unique job identifier |
+| `name` | string | Human-readable job name |
+| `cron_expression` | string | Cron schedule (e.g., `0 */6 * * *`) |
+| `command` | string | StateSet command to execute |
+| `enabled` | boolean | Whether job is active |
+| `last_run_at` | datetime | Timestamp of last execution |
+| `last_status` | string | success, failed, skipped |
+| `next_run_at` | datetime | Next scheduled execution time |
+
+## Workflow Instance States
+
+```
+Pending -> Running -> Completed
+              \-> Failed (retryable)
+              \-> TimedOut
+              \-> Cancelled (manual)
+```
+
+## Approval Request Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `request_id` | string | Unique approval request ID |
+| `workflow_id` | string | Originating workflow |
+| `entity_type` | string | Type of entity requiring approval |
+| `entity_id` | string | ID of entity under review |
+| `requested_by` | string | User or system that triggered |
+| `approver` | string | Designated approver |
+| `status` | string | pending, approved, denied, expired |
+| `expires_at` | datetime | Auto-deny deadline |
+
+## Common Cron Expressions
+
+| Schedule | Expression | Use Case |
+|----------|-----------|----------|
+| Every hour | `0 * * * *` | Sync checks, health pings |
+| Every 6 hours | `0 */6 * * *` | Inventory recount |
+| Daily at midnight | `0 0 * * *` | Aging reports, dunning |
+| Weekly Monday 9am | `0 9 * * 1` | AP payment runs |
+| First of month | `0 0 1 * *` | Monthly invoicing |
+
+## Monitoring Endpoints
+
+```bash
+# Engine health summary
+stateset-autonomous health
+
+# Metrics for Prometheus/Grafana
+stateset-autonomous metrics --format prometheus
+
+# Export audit trail for a date range
+stateset-autonomous audit-log --from 2025-03-01 --to 2025-03-31 --format json
+```

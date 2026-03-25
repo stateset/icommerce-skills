@@ -61,3 +61,48 @@ stateset --apply "checkout cart cart_123"
 | `PAYMENT_REQUIRED` | Payment not set | Call `set_cart_payment` |
 | `ITEM_OUT_OF_STOCK` | SKU unavailable | Check inventory, remove or substitute |
 | `COUPON_INVALID` | Code expired or ineligible | Validate with `validate_coupon` first |
+
+## Shipping Address Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `line1` | string | Yes | Street address |
+| `line2` | string | No | Apartment, suite, unit |
+| `city` | string | Yes | City name |
+| `state` | string | Yes | State or province code |
+| `postal_code` | string | Yes | ZIP or postal code |
+| `country` | string | Yes | ISO 3166-1 alpha-2 country code |
+| `phone` | string | No | Contact phone for delivery |
+
+## Payment Methods
+
+| Method | `payment_type` Value | Notes |
+|--------|---------------------|-------|
+| Credit Card | `credit_card` | Requires tokenized card reference |
+| ACH / Bank Transfer | `bank_transfer` | Requires routing and account token |
+| Store Credit | `store_credit` | Deducted from customer balance |
+| Gift Card | `gift_card` | Requires gift card code |
+| External (PayPal, etc.) | `external` | Redirect-based; set `external_ref` |
+
+## Cart Abandonment Recovery
+
+Carts transition to `Abandoned` after a configurable timeout (default 24 hours). Recovery workflow:
+
+```bash
+# List abandoned carts from the last 7 days
+stateset "list carts status abandoned since 7d"
+
+# Send recovery email for a specific cart
+stateset --apply "send cart recovery email cart_123"
+```
+
+## Tax Calculation
+
+Tax is computed automatically when a shipping address is set. The engine applies jurisdiction-based rates:
+
+| Field | Description |
+|-------|-------------|
+| `tax_rate` | Effective combined rate applied |
+| `tax_amount` | Calculated tax total |
+| `tax_jurisdiction` | State/province used for rate lookup |
+| `tax_exempt` | Boolean; true if customer is tax-exempt |

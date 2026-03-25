@@ -61,3 +61,47 @@ stateset "list billing cycles for SUB-123"
 | `current_period_end` | End of current billing period |
 | `next_charge_date` | Next billing date |
 | `cancel_at_period_end` | Cancel at end of period (boolean) |
+
+## Plan Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `plan_id` | string | Unique plan identifier |
+| `name` | string | Display name (e.g., "Pro Monthly") |
+| `amount` | number | Charge amount per interval |
+| `currency` | string | ISO 4217 currency code |
+| `interval` | string | Billing frequency |
+| `trial_days` | number | Free trial duration (0 = no trial) |
+| `features` | array | List of included feature keys |
+
+## Billing Cycle Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cycle_id` | string | Unique cycle identifier |
+| `subscription_id` | string | Parent subscription |
+| `period_start` | datetime | Cycle start date |
+| `period_end` | datetime | Cycle end date |
+| `amount` | number | Amount charged |
+| `status` | string | scheduled, charged, paid, failed, skipped |
+| `payment_method` | string | Method used for charge |
+| `failure_reason` | string | Reason if charge failed |
+
+## Retry Logic for Failed Charges
+
+| Attempt | Delay | Action |
+|---------|-------|--------|
+| 1st retry | 3 days | Re-attempt charge |
+| 2nd retry | 5 days | Re-attempt, notify customer |
+| 3rd retry | 7 days | Final attempt, warn of cancellation |
+| Exhausted | -- | Cancel subscription, send notice |
+
+## Error Codes
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `PLAN_NOT_FOUND` | Invalid plan_id | Verify plan exists with `list_plans` |
+| `ALREADY_ACTIVE` | Subscription already active | Use upgrade/downgrade instead |
+| `ALREADY_CANCELLED` | Cannot modify cancelled subscription | Create a new subscription |
+| `PAYMENT_FAILED` | Charge declined | Update payment method, retry |
+| `TRIAL_EXPIRED` | Trial ended without payment | Add payment method to activate |

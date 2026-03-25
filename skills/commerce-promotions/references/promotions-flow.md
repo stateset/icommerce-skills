@@ -52,3 +52,67 @@ stateset --apply "deactivate promotion PROMO-123"
 | `promotion_id` | Linked promotion |
 | `max_uses` | Per-coupon usage limit |
 | `redemption_count` | Times redeemed |
+
+## Promotion Status Transitions
+
+| Current Status | Allowed Next Status |
+|---------------|-------------------|
+| `draft` | `active`, `cancelled` |
+| `active` | `expired`, `cancelled` |
+| `expired` | (terminal) |
+| `cancelled` | (terminal) |
+
+## Stacking Rules
+
+| Rule | Behavior |
+|------|----------|
+| `no_stack` | Only one promotion per cart (default) |
+| `stack_with_shipping` | Combines with free shipping promotions |
+| `stack_all` | Combines with any other active promotion |
+
+## Eligibility Conditions
+
+| Condition | Field | Example |
+|-----------|-------|---------|
+| Minimum cart total | `min_cart_total` | Cart >= $50 |
+| Specific products | `eligible_product_ids` | Only SKU-001, SKU-002 |
+| Customer segment | `eligible_segments` | VIP customers only |
+| First order only | `first_order_only` | New customer acquisition |
+| Specific channels | `eligible_channels` | Web only, excludes POS |
+
+## Error Handling
+
+| Error Code | Meaning | Resolution |
+|------------|---------|------------|
+| `COUPON_EXPIRED` | Coupon past end_date | Inform customer; suggest active codes |
+| `COUPON_MAX_USES` | Redemption limit reached | No further uses; create new coupon |
+| `MIN_CART_NOT_MET` | Cart total below minimum | Customer must add more items |
+| `NOT_ELIGIBLE` | Customer or product not in eligible list | Check eligibility conditions |
+| `ALREADY_APPLIED` | Promotion already on this cart | No action needed |
+| `STACK_CONFLICT` | Cannot combine with existing promotion | Remove conflicting promotion first |
+
+## Promotion Analytics Commands
+
+```bash
+stateset "promotion performance PROMO-123"
+stateset "list promotions sort redemption_count desc"
+stateset "coupon usage summary for promotion PROMO-123"
+stateset "revenue impact for promotion PROMO-123"
+```
+
+## Events Emitted
+
+| Event | Trigger |
+|-------|---------|
+| `promotion.created` | New promotion created |
+| `promotion.activated` | Promotion goes live |
+| `promotion.deactivated` | Promotion paused or ended |
+| `coupon.redeemed` | Coupon applied to an order |
+| `coupon.rejected` | Coupon validation failed |
+
+## Integration Notes
+
+- Promotions with `end_date` in the past are automatically transitioned to `expired` by a nightly job.
+- The `buy_x_get_y` type requires specifying `buy_quantity`, `get_quantity`, and `get_product_ids`.
+- Coupon codes are case-insensitive; `SUMMER20` and `summer20` match the same coupon.
+- Cart-level discounts are distributed proportionally across line items for accurate tax calculation.

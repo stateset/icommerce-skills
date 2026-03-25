@@ -97,3 +97,10 @@ Summary report showing:
 - Value by product category
 - COGS for the period
 - Variance totals
+
+## Common Commands
+
+```bash
+stateset cost set WIDGET-001 --method standard --material 8.00 --labor 3.00 --overhead 1.50 --apply
+stateset cost valuation --warehouse WH-EAST --as-of 2025-06-30
+```

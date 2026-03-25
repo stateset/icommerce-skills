@@ -76,3 +76,43 @@ EmbeddingConfig {
 - Vector search is in-memory for SQLite (fast for <100K entities)
 - BM25 search uses SQLite FTS5 indexes (fast)
 - Consider batch embedding generation for large catalogs
+
+## Common Operations
+
+```bash
+stateset "search products matching 'durable outdoor camping gear'"
+stateset "find customers similar to CUST-1001"
+stateset "search orders related to 'delayed shipment widget'"
+stateset "search inventory for 'red medium t-shirt'"
+stateset --apply "reindex embeddings for products"
+stateset --apply "reindex embeddings for entity product_id PROD-0500"
+```
+
+## Text Templates for Embedding
+
+Each entity type constructs its embedding text from specific fields:
+
+| Entity | Fields Used |
+|--------|------------|
+| Product | `name`, `description`, `category`, `tags`, `sku`, `brand` |
+| Customer | `name`, `email`, `company`, `notes`, `tags`, `order_history_summary` |
+| Order | `order_number`, `customer_name`, `item_names`, `status`, `notes` |
+| InventoryItem | `sku`, `product_name`, `location`, `condition`, `lot_number` |
+
+## Relevance Score Guidelines
+
+| Score Range | Interpretation | Typical Action |
+|-------------|---------------|----------------|
+| 0.90 - 1.00 | Exact or near-exact match | Show as top result |
+| 0.75 - 0.89 | Strong semantic match | Include in results |
+| 0.60 - 0.74 | Moderate relevance | Include if result set is small |
+| 0.40 - 0.59 | Weak relevance | Exclude from default results |
+| 0.00 - 0.39 | Not relevant | Always exclude |
+
+## Practical Notes
+
+- The default `min_score` of 0.6 works well for most product searches; lower to 0.4 for exploratory queries.
+- Hybrid search outperforms pure vector search when queries contain specific identifiers like SKUs or order numbers.
+- Embedding re-indexing is idempotent; the `text_hash` field prevents unnecessary API calls when content has not changed.
+- For catalogs exceeding 100K entities, consider partitioning embeddings by entity type for faster search.
+- OpenAI rate limits apply during batch re-indexing; use exponential backoff and batch requests of up to 2048 texts.

@@ -91,3 +91,12 @@ Complete serial information including:
 | Electronics | Component batches | Individual device warranty |
 | Automotive | Parts lots | VIN-level tracking |
 | Medical Devices | Sterilization batches | UDI compliance |
+
+## Common Commands
+
+```bash
+stateset lots create --sku PHARMA-100 --quantity 500 --expiration 2026-06-30 --apply
+stateset lots trace LOT-2025-A001 --direction downstream
+stateset serials lookup SN-W001-00001
+stateset lots list --status quarantine
+```

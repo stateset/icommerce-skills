@@ -65,3 +65,51 @@
 3. create_warranty_claim(warranty_id, issue_description)
 4. Track claim status and resolution
 ```
+
+## Escalation Matrix
+
+| Tier | Condition | Action |
+|------|-----------|--------|
+| Tier 1 | Standard inquiry | Agent resolves using playbooks |
+| Tier 2 | Policy exception needed | Supervisor override required |
+| Tier 3 | Legal, fraud, or safety | Escalate to specialized team |
+
+## Return Policy Reference
+
+| Condition | Window | Eligible |
+|-----------|--------|----------|
+| Unopened, original packaging | 30 days | Full refund |
+| Opened, like-new condition | 30 days | Full refund |
+| Opened, used | 14 days | Exchange or store credit |
+| Defective or damaged | 90 days | Full refund or replacement |
+| Final sale items | N/A | Not eligible |
+
+## Common MCP Tool Parameters
+
+| Tool | Key Parameters |
+|------|---------------|
+| `get_customer` | `email` or `customer_id` |
+| `list_orders` | `customer_id`, `status`, `limit` |
+| `list_shipments` | `order_id` |
+| `create_return` | `order_id`, `items[]`, `reason` |
+| `approve_return` | `return_id` |
+| `cancel_order` | `order_id`, `reason` |
+| `create_refund` | `payment_id`, `amount`, `reason` |
+| `get_stock` | `sku` |
+| `create_warranty_claim` | `order_id`, `issue_description` |
+
+## Response Templates
+
+```
+# Order status response
+"Your order {{order_id}} is currently {{status}}.
+{{#if tracking}}Tracking: {{carrier}} {{tracking_number}}{{/if}}"
+
+# Return confirmation
+"Return {{return_id}} has been created for order {{order_id}}.
+Please ship items back within 14 days using the prepaid label."
+
+# Cancellation confirmation
+"Order {{order_id}} has been cancelled. A refund of {{amount}}
+will be processed within 5-7 business days."
+```

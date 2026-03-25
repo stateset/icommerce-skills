@@ -90,3 +90,12 @@ Events are written to a local outbox table before sync:
 | `expires_at` | Auto-expiration time |
 
 Usage: Include idempotency key in write operations to prevent duplicates on retry.
+
+## Common Commands
+
+```bash
+stateset-events list --entity-type order --since 2025-01-01
+stateset-events inspect evt_001 --include-payload
+stateset-events outbox --status pending --limit 20
+stateset-events replay evt_001 --apply
+```

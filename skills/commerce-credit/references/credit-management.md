@@ -64,3 +64,44 @@ Review workflow:
 | Medium | Occasional late payments, moderate utilization |
 | High | Frequent late payments, high utilization |
 | Critical | Past-due > 90 days, over limit |
+
+## Common Operations
+
+```bash
+stateset --apply "create credit account for customer CUST-1001 limit 50000 terms net30"
+stateset --apply "run credit check for order ORD-2025-0500"
+stateset --apply "increase credit limit CUST-1001 to 75000 reason good_payment_history"
+stateset --apply "place credit hold on customer CUST-1001 type manual reason review_needed"
+stateset --apply "release credit hold CUST-1001"
+stateset "list customers with credit holds"
+stateset "credit utilization report"
+```
+
+## Credit Review Schedule
+
+| Risk Rating | Review Frequency | Auto-Review Triggers |
+|-------------|-----------------|---------------------|
+| Low | Annually | Credit limit increase request |
+| Medium | Semi-annually | Payment 15+ days late |
+| High | Quarterly | Order exceeding 80% of limit |
+| Critical | Monthly | Any new order placed |
+
+## Credit Memo Fields
+
+| Field | Description |
+|-------|-------------|
+| `credit_memo_id` | Unique memo identifier (CM-YYYY-NNNN) |
+| `customer_id` | Customer receiving the credit |
+| `amount` | Credit amount issued |
+| `reason` | ReturnCredit, PriceAdjustment, Goodwill, BillingError, Warranty |
+| `source_invoice_id` | Original invoice, if applicable |
+| `applied_to_invoice` | Invoice the memo is applied against |
+| `status` | Draft, Approved, Applied, Voided |
+
+## Practical Notes
+
+- Credit checks are performed automatically at order submission; orders exceeding available credit enter a hold queue.
+- A **RequiresApproval** result allows a credit manager to override and approve the order within 48 hours before it is auto-rejected.
+- Credit memos reduce `credit_used` immediately upon approval, freeing available credit for new orders.
+- Write-offs require manager-level approval and generate a corresponding GL journal entry to Bad Debt Expense.
+- The `credit_available` field is computed in real time: `credit_limit - credit_used`.
