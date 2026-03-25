@@ -18,12 +18,24 @@ Manage customer credit limits, perform credit checks, process credit application
 
 ## Usage
 
-- MCP tools: `create_credit_account`, `get_credit_account`, `update_credit_account`, `check_credit`, `place_credit_hold`, `release_credit_hold`, `submit_credit_application`, `review_credit_application`, `record_credit_transaction`, `get_customer_credit_summary`.
+- CLI: `stateset credit ...` or `stateset "check credit for customer CUST-123"`
 - Writes require `--apply`.
+- MCP tools: `create_credit_account`, `get_credit_account`, `update_credit_account`, `check_credit`, `place_credit_hold`, `release_credit_hold`, `submit_credit_application`, `review_credit_application`, `record_credit_transaction`, `get_customer_credit_summary`.
 
-## Credit Account Statuses
+## Examples
 
-- Active, Suspended, OnHold, Closed, PendingReview
+```bash
+stateset --db ./store.db "check credit customer_id=cust_123 order_amount=2000"
+stateset --db ./store.db "create credit account customer_id=cust_456 limit=10000 risk=Low" --apply
+stateset --db ./store.db "release credit hold hold_id=HOLD-001 reason='Payment received'" --apply
+stateset --db ./store.db "get customer credit summary customer_id=cust_123"
+```
+
+## Status Flows
+
+**Credit Account:** PendingReview -> Active -> OnHold -> Suspended -> Closed
+**Credit Application:** Pending -> UnderReview -> Approved/Denied/MoreInfoNeeded (or Withdrawn)
+**Credit Hold:** Placed -> UnderReview -> Released (or Escalated)
 
 ## Risk Ratings
 
@@ -31,19 +43,7 @@ Manage customer credit limits, perform credit checks, process credit application
 
 ## Hold Types
 
-- OverLimit: order would exceed credit limit
-- PastDue: customer has past-due invoices
-- Manual: manually placed by credit manager
-- NewCustomer: first-time buyer review
-- HighRisk: elevated risk rating
-
-## Credit Application Statuses
-
-- Pending -> UnderReview -> Approved/Denied/MoreInfoNeeded (or Withdrawn)
-
-## Credit Transaction Types
-
-- Charge, Payment, CreditMemo, Adjustment, WriteOff, LimitChange
+- OverLimit, PastDue, Manual, NewCustomer, HighRisk
 
 ## Output
 
@@ -63,6 +63,19 @@ Manage customer credit limits, perform credit checks, process credit application
 - Order on hold: check hold type; release after payment or manager override.
 - Credit check denied: customer over limit or has past-due balance.
 - Application stuck: verify all required business information is provided.
+- Limit change not reflected: confirm the credit transaction of type LimitChange was recorded.
+
+## Error Codes
+
+- `CREDIT_OVER_LIMIT`: Order amount exceeds the customer's available credit limit.
+- `CREDIT_HOLD_ACTIVE`: An active credit hold is blocking order processing for this customer.
+- `CREDIT_APP_INCOMPLETE`: Credit application is missing required business information.
+
+## Related Skills
+
+- **commerce-accounts-receivable**: Track overdue invoices that trigger credit holds.
+- **commerce-general-ledger**: Post write-offs and credit memo adjustments to GL.
+- **commerce-backorders**: Credit holds can block backorder fulfillment.
 
 ## References
 - references/credit-management.md

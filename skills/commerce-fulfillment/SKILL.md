@@ -17,8 +17,18 @@ Orchestrate outbound order fulfillment through wave planning, picking, packing, 
 
 ## Usage
 
-- MCP tools: `create_wave`, `list_waves`, `release_wave`, `create_pick_task`, `complete_pick`, `create_pack_task`, `add_carton`, `create_ship_task`, `complete_ship`.
+- CLI: `stateset fulfillment ...` or `stateset "create wave for orders ORD-001 ORD-002"`
 - Writes require `--apply`.
+- MCP tools: `create_wave`, `list_waves`, `release_wave`, `create_pick_task`, `complete_pick`, `create_pack_task`, `add_carton`, `create_ship_task`, `complete_ship`.
+
+## Examples
+
+```bash
+stateset fulfillment create-wave --type batch --orders ORD-101,ORD-102,ORD-103 --apply
+stateset fulfillment release-wave WAVE-2025-001 --apply
+stateset fulfillment complete-pick PICK-0042 --quantity 10 --apply
+stateset fulfillment complete-ship SHIP-0018 --carrier UPS --tracking 1Z999AA1012345 --apply
+```
 
 ## Wave Types
 
@@ -59,6 +69,13 @@ Orchestrate outbound order fulfillment through wave planning, picking, packing, 
 - Short pick: item not at expected location; check inventory and create adjustment.
 - Wave stuck in progress: verify all pick tasks are completed.
 - Carton overweight: split items across multiple cartons.
+- Label generation failed: verify carrier credentials and shipment `tracking_number` format.
+
+## Error Codes
+
+- `FULFILL_SHORT_PICK`: Item not found at expected location; inventory adjustment required.
+- `FULFILL_WAVE_INCOMPLETE`: Wave cannot complete because one or more pick tasks are still pending.
+- `FULFILL_CARTON_OVERWEIGHT`: Carton exceeds maximum weight limit; split items across cartons.
 
 ## References
 - references/fulfillment-flow.md

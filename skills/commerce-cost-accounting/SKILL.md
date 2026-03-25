@@ -19,8 +19,18 @@ Track item costs using multiple costing methods, manage cost layers, analyze var
 
 ## Usage
 
-- MCP tools: `set_item_cost`, `get_item_cost`, `list_item_costs`, `create_cost_layer`, `issue_from_cost_layer`, `record_cost_variance`, `create_cost_adjustment`, `approve_cost_adjustment`, `rollup_bom_cost`, `get_inventory_valuation`, `get_sku_cost_summary`.
+- CLI: `stateset cost ...` or `stateset "set cost for WIDGET-001"`
 - Writes require `--apply`.
+- MCP tools: `set_item_cost`, `get_item_cost`, `list_item_costs`, `create_cost_layer`, `issue_from_cost_layer`, `record_cost_variance`, `create_cost_adjustment`, `approve_cost_adjustment`, `rollup_bom_cost`, `get_inventory_valuation`, `get_sku_cost_summary`.
+
+## Examples
+
+```bash
+stateset cost set WIDGET-001 --method standard --material 8.00 --labor 3.00 --overhead 1.50 --apply
+stateset cost layers WIDGET-001 --method fifo
+stateset cost rollup BOM-ASSY-100 --apply
+stateset cost valuation --warehouse WH-EAST --as-of 2025-06-30
+```
 
 ## Costing Methods
 
@@ -39,9 +49,11 @@ Track item costs using multiple costing methods, manage cost layers, analyze var
 - Efficiency: actual vs standard quantity
 - Volume: over/under absorption of fixed costs
 
-## Cost Adjustment Statuses
+## Status Flows
 
-- Pending -> Approved -> Applied (or Rejected)
+**Cost Adjustment:** Pending -> Approved -> Applied (or Rejected)
+**Cost Layer:** Open -> Partially Issued -> Fully Issued
+**Variance:** Detected -> Reviewed -> Posted (or Dismissed)
 
 ## Output
 
@@ -63,6 +75,18 @@ Track item costs using multiple costing methods, manage cost layers, analyze var
 - Cost adjustment rejected: provide justification and re-submit.
 - BOM rollup incomplete: ensure all component costs are set.
 - FIFO/LIFO mismatch: verify cost layers are properly ordered by receipt date.
+
+## Error Codes
+
+- `COST_BOM_INCOMPLETE`: One or more BOM components are missing cost data for rollup.
+- `COST_VARIANCE_THRESHOLD`: Actual cost variance exceeds the acceptable threshold for the costing method.
+- `COST_LAYER_MISMATCH`: Cost layers are not properly ordered by receipt date for FIFO/LIFO issuance.
+
+## Related Skills
+
+- commerce-manufacturing — BOMs and work orders that drive cost rollups
+- commerce-inventory — inventory valuation tied to cost layers
+- commerce-general-ledger — journal entries for cost variance postings
 
 ## References
 - references/costing-methods.md

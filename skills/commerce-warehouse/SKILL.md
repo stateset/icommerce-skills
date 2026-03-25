@@ -17,8 +17,18 @@ Manage warehouse facilities, location hierarchies, and inventory movements acros
 
 ## Usage
 
-- MCP tools: `list_warehouses`, `get_warehouse`, `create_warehouse`, `update_warehouse`, `list_locations`, `get_location`, `create_location`, `get_location_inventory`, `adjust_location_inventory`, `move_inventory`, `list_movements`.
+- CLI: `stateset warehouse ...` or `stateset "list warehouse locations"`
 - Writes require `--apply`.
+- MCP tools: `list_warehouses`, `get_warehouse`, `create_warehouse`, `update_warehouse`, `list_locations`, `get_location`, `create_location`, `get_location_inventory`, `adjust_location_inventory`, `move_inventory`, `list_movements`.
+
+## Examples
+
+```bash
+stateset warehouse create --name "East DC" --type Distribution --apply
+stateset warehouse create-location WH-EAST --type Pick --code LOC-A1-01 --apply
+stateset warehouse move --sku WIDGET-001 --from LOC-A1-01 --to LOC-B2-03 --quantity 25 --apply
+stateset warehouse inventory LOC-A1-01 --include-reserved
+```
 
 ## Warehouse Types
 
@@ -27,6 +37,12 @@ Manage warehouse facilities, location hierarchies, and inventory movements acros
 ## Location Types
 
 - Bulk, Pick, Staging, Receiving, Shipping, Quarantine, Returns, Production, Packing, CrossDock
+
+## Status Flows
+
+**Warehouse:** Active -> Inactive -> Decommissioned
+**Movement:** Pending -> InProgress -> Completed (or Cancelled)
+**Location:** Active -> Inactive -> Blocked
 
 ## Movement Types
 
@@ -43,12 +59,26 @@ Manage warehouse facilities, location hierarchies, and inventory movements acros
 - Warehouse and location identifiers created or updated.
 - Inventory quantities at affected locations.
 - Movement audit trail with reason and reference.
+- Location utilization and capacity status.
 
 ## Troubleshooting
 
 - Insufficient stock at location: check on-hand minus reserved before moving.
 - Location not found: verify the warehouse and location hierarchy exist.
 - Duplicate location code: location codes must be unique within a warehouse.
+- Movement stuck in progress: verify both source and destination locations are active.
+
+## Error Codes
+
+- `INSUFFICIENT_LOCATION_STOCK`: On-hand quantity minus reserved is insufficient for the requested move.
+- `LOCATION_NOT_FOUND`: The specified warehouse or location code does not exist in the hierarchy.
+- `DUPLICATE_LOCATION_CODE`: A location with this code already exists within the warehouse.
+
+## Related Skills
+
+- **commerce-receiving**: Put-away tasks move received goods into warehouse locations.
+- **commerce-quality**: Quality holds block inventory movement at specific locations.
+- **commerce-backorders**: Warehouse stock levels determine backorder allocation.
 
 ## References
 - references/warehouse-locations.md

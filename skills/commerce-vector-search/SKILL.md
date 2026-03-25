@@ -17,9 +17,19 @@ Hybrid semantic and keyword search across commerce entities using OpenAI embeddi
 
 ## Usage
 
+- CLI: `stateset search ...` or `stateset "search products wireless headphones"`
 - MCP tools: `search_products`, `search_customers`, `search_orders`, `search_inventory`, `get_embedding_stats`.
 - Embedding model: OpenAI `text-embedding-3-small` (1536 dimensions).
 - BM25 full-text via SQLite FTS5.
+
+## Examples
+
+```bash
+stateset search products "wireless noise cancelling headphones" --min-score 0.8
+stateset search customers "enterprise accounts in California" --limit 10
+stateset search orders "damaged shipment last month" --entity-type order
+stateset search inventory "low stock warehouse A" --min-score 0.7
+```
 
 ## Searchable Entities
 
@@ -34,6 +44,11 @@ Hybrid semantic and keyword search across commerce entities using OpenAI embeddi
 - BM25 keyword: traditional term-frequency scoring
 - Combined ranking for hybrid search results
 - `min_score` threshold to filter low-relevance results
+
+## Status Flows
+
+**Embedding:** Pending -> Generated -> Indexed (or Failed)
+**Search Query:** Received -> Embedding -> Ranked -> Returned (or NoResults)
 
 ## Output
 
@@ -54,6 +69,18 @@ Hybrid semantic and keyword search across commerce entities using OpenAI embeddi
 - Low relevance scores: refine the search query or lower the min_score threshold.
 - Missing embeddings: run embedding generation for new or updated entities.
 - API key error: verify OpenAI API key in embedding configuration.
+
+## Error Codes
+
+- `EMBEDDING_NOT_FOUND`: No embeddings exist for the requested entity type; run embedding generation first.
+- `SEARCH_NO_RESULTS`: Query returned no matches above the minimum score threshold.
+- `EMBEDDING_API_KEY_INVALID`: The OpenAI API key for embedding generation is missing or rejected.
+
+## Related Skills
+
+- commerce-products — product catalog data indexed for search
+- commerce-customers — customer records searchable by name/email
+- commerce-orders — order data indexed for semantic search
 
 ## References
 - references/vector-search-config.md

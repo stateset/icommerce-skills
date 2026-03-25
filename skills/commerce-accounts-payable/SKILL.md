@@ -17,20 +17,27 @@ Track supplier bills, process payments, run payment batches, and monitor AP agin
 
 ## Usage
 
-- MCP tools: `list_bills`, `create_bill`, `approve_bill`, `record_bill_payment`, `create_payment_run`, `approve_payment_run`, `get_ap_aging`, `get_ap_summary`.
+- CLI: `stateset ap ...` or `stateset "AP aging report"`
 - Writes require `--apply`.
+- MCP tools: `list_bills`, `create_bill`, `approve_bill`, `record_bill_payment`, `create_payment_run`, `approve_payment_run`, `get_ap_aging`, `get_ap_summary`.
 
-## Bill Statuses
+## Examples
 
-- Draft -> Pending -> Approved -> PartiallyPaid -> Paid (or Cancelled/Disputed/Overdue)
+```bash
+stateset --db ./store.db "list bills where supplier = 'Acme Corp'"
+stateset --db ./store.db "create bill supplier='Acme Corp' amount=2500 due_date=2026-04-15" --apply
+stateset --db ./store.db "approve bill BILL-2025-0050" --apply
+stateset --db ./store.db "get ap aging"
+```
+
+## Status Flows
+
+**Bill:** Draft -> Pending -> Approved -> PartiallyPaid -> Paid (or Cancelled/Disputed/Overdue)
+**Payment Run:** Draft -> Pending -> Approved -> Processing -> Completed (or Cancelled)
 
 ## Payment Methods
 
 - Check, ACH, Wire, CreditCard, Cash, Other
-
-## Payment Run Statuses
-
-- Draft -> Pending -> Approved -> Processing -> Completed (or Cancelled)
 
 ## Aging Buckets
 
@@ -54,6 +61,19 @@ Track supplier bills, process payments, run payment batches, and monitor AP agin
 - Bill not approved: bills must be approved before payment.
 - Payment exceeds balance: verify bill amount and prior payments.
 - Duplicate bill: check existing bills for the same supplier invoice number.
+- Payment run stuck processing: verify bank integration status and retry or cancel the run.
+
+## Error Codes
+
+- `AP_BILL_NOT_APPROVED`: Bill must be approved before payment can be recorded.
+- `AP_PAYMENT_EXCEEDS_BALANCE`: Payment amount exceeds the outstanding bill balance.
+- `AP_DUPLICATE_INVOICE`: A bill with the same supplier invoice number already exists.
+
+## Related Skills
+
+- **commerce-general-ledger**: Bill payments auto-post journal entries to GL.
+- **commerce-receiving**: Match supplier bills against received PO quantities.
+- **commerce-accounts-receivable**: Offset vendor debit memos against payables.
 
 ## References
 - references/ap-aging.md

@@ -2,20 +2,44 @@
 
 ## Initialize
 
-- `stateset-sync init --sequencer-url http://localhost:8080 --tenant-id <uuid> --store-id <uuid> --db ./store.db`
-
-## Keys
-
-- `stateset-sync keys:generate`
-- `stateset-sync keys:register`
+```bash
+stateset-sync init --sequencer-url http://localhost:8080 --tenant-id <uuid> --store-id <uuid> --db ./store.db
+stateset-sync keys:generate
+stateset-sync keys:register
+```
 
 ## Push / Pull
 
-- `stateset-sync status --db ./store.db`
-- `stateset-sync push --db ./store.db --batch-size 100`
-- `stateset-sync pull --db ./store.db --limit 1000`
+```bash
+stateset-sync status --db ./store.db
+stateset-sync push --db ./store.db --batch-size 100
+stateset-sync pull --db ./store.db --limit 1000
+stateset-sync rebase
+```
 
-## Conflict Resolution
+## MCP Tool Reference
 
-- `stateset-sync rebase`
-- Use `resolve_conflict` MCP tool in autonomous mode if needed.
+| Tool | Action | Requires --apply |
+|------|--------|-----------------|
+| `sync_status` | Check sync state and pending events | No |
+| `sync_push` | Push local events to sequencer | Yes |
+| `sync_pull` | Pull remote events to local | Yes |
+| `resolve_conflict` | Resolve VES conflicts | Yes |
+
+## Sync Lifecycle
+
+| Phase | Description |
+|-------|-------------|
+| Init | Register store with sequencer |
+| Key Generation | Create Ed25519 signing keys |
+| Push | Upload local events to remote |
+| Pull | Download remote events to local |
+| Rebase | Resolve ordering conflicts |
+
+## Conflict Resolution (VES)
+
+| Strategy | Description |
+|----------|-------------|
+| Last-Write-Wins | Timestamp-based, newest wins |
+| Manual | Agent or user resolves via `resolve_conflict` |
+| Custom | Org-specific merge rules |

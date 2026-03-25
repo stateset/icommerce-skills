@@ -17,12 +17,23 @@ Track unfulfilled demand, allocate incoming inventory, and prioritize backorder 
 
 ## Usage
 
-- MCP tools: `list_backorders`, `create_backorder`, `update_backorder`, `allocate_backorder`, `fulfill_backorder`, `cancel_backorder`, `get_backorder_summary`, `get_sku_backorder_summary`.
+- CLI: `stateset backorders ...` or `stateset "list backorders for SKU WIDGET-001"`
 - Writes require `--apply`.
+- MCP tools: `list_backorders`, `create_backorder`, `update_backorder`, `allocate_backorder`, `fulfill_backorder`, `cancel_backorder`, `get_backorder_summary`, `get_sku_backorder_summary`.
 
-## Backorder Statuses
+## Examples
 
-- Pending -> PartiallyFulfilled -> Allocated -> ReadyToShip -> Fulfilled (or Cancelled)
+```bash
+stateset backorders create --sku WIDGET-001 --quantity 100 --priority high --apply
+stateset backorders allocate BO-2025-0015 --source PurchaseOrder --po PO-2025-050 --apply
+stateset backorders fulfill BO-2025-0015 --quantity 60 --apply
+stateset backorders summary --sku WIDGET-001
+```
+
+## Status Flows
+
+**Backorder:** Pending -> Allocated -> PartiallyFulfilled -> ReadyToShip -> Fulfilled (or Cancelled)
+**Allocation:** Pending -> Confirmed -> Expired (or Released)
 
 ## Priority Levels
 
@@ -54,6 +65,19 @@ Track unfulfilled demand, allocate incoming inventory, and prioritize backorder 
 - Allocation expired: re-allocate or extend expiration date.
 - Cannot fulfill: verify available inventory matches allocation.
 - Priority conflict: Critical backorders should be fulfilled before Low/Normal.
+- Promised date passed: update the promised date and notify the customer.
+
+## Error Codes
+
+- `BO_ALLOCATION_EXPIRED`: The inventory allocation has expired and must be re-allocated.
+- `BO_INSUFFICIENT_STOCK`: Available inventory is insufficient to fulfill the backorder quantity.
+- `BO_PROMISED_DATE_PASSED`: The promised delivery date has elapsed without fulfillment.
+
+## Related Skills
+
+- **commerce-receiving**: Incoming PO receipts provide stock for backorder allocation.
+- **commerce-warehouse**: Warehouse inventory levels drive backorder fulfillment.
+- **commerce-quality**: Failed inspections can reduce allocatable inventory.
 
 ## References
 - references/backorder-management.md

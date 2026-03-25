@@ -2,35 +2,54 @@
 
 ## Startup Checklist
 
-1. Confirm database path exists or is writable.
-2. Start engine:
-   - `stateset-autonomous start --db ./.stateset/commerce.db --port 3000`
-3. Check status:
-   - `stateset-autonomous status`
+```bash
+# 1. Confirm database path exists
+ls -la ./.stateset/commerce.db
+
+# 2. Start engine
+stateset-autonomous start --db ./.stateset/commerce.db --port 3000
+
+# 3. Check status
+stateset-autonomous status
+```
 
 ## Incident Triage
 
-- Jobs not running: check scheduler is enabled.
-- Workflows stuck: list workflow instances and inspect last transition.
-- Approvals stuck: list pending approvals and take action.
-- Webhooks failing: verify port and event payloads.
+| Symptom | Cause | Resolution |
+|---------|-------|------------|
+| Jobs not running | Scheduler disabled | Restart without `--no-scheduler` |
+| Workflows stuck | Activity timeout | List instances, cancel stuck runs |
+| Approvals stuck | No approver | Review pending approvals, approve or deny |
+| Webhooks failing | Port conflict | Change port or stop conflicting process |
+| DB locked | Concurrent access | Stop other processes, retry |
 
 ## Safe Mode
 
 Disable subsystems when needed:
 
-- `stateset-autonomous start --no-scheduler`
-- `stateset-autonomous start --no-workflows`
-- `stateset-autonomous start --no-approvals`
-- `stateset-autonomous start --no-webhooks`
+```bash
+stateset-autonomous start --no-scheduler    # disable cron jobs
+stateset-autonomous start --no-workflows    # disable workflow engine
+stateset-autonomous start --no-approvals    # disable approval gates
+stateset-autonomous start --no-webhooks     # disable inbound events
+```
 
 ## Recovery
 
-- Pause scheduled jobs if they are causing churn.
-- Re-enable policies after validating rules.
-- Re-run failed jobs with MCP `run_job_now`.
+```bash
+# Pause all scheduled jobs
+stateset-autonomous jobs pause-all
+
+# Re-run a specific failed job
+stateset-autonomous jobs run JOB-001
+
+# List workflow instances and cancel stuck ones
+stateset-autonomous workflows list-instances --status running
+stateset-autonomous workflows cancel WFI-001
+```
 
 ## Logging and Audit
 
-- Use `--verbose` on start.
-- Capture job run IDs and workflow instance IDs.
+- Start with `--verbose` for detailed logging.
+- Capture `job_run_id` and `workflow_instance_id` for traceability.
+- Review event log with `stateset-events list --entity-type job_run`.

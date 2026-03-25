@@ -17,8 +17,18 @@ Process inbound goods from purchase orders, transfers, and returns through recei
 
 ## Usage
 
-- MCP tools: `create_receipt`, `list_receipts`, `get_receipt`, `receive_items`, `create_put_away`, `complete_put_away`.
+- CLI: `stateset receiving ...` or `stateset "receive items for PO PO-123"`
 - Writes require `--apply`.
+- MCP tools: `create_receipt`, `list_receipts`, `get_receipt`, `receive_items`, `create_put_away`, `complete_put_away`.
+
+## Examples
+
+```bash
+stateset receiving create --type PurchaseOrder --po PO-2025-0100 --apply
+stateset receiving receive-items RCV-2025-0042 --sku WIDGET-001 --quantity 150 --apply
+stateset receiving put-away RCV-2025-0042 --location LOC-A1-05 --apply
+stateset receiving list --status InProgress --since 2025-01-01
+```
 
 ## Receipt Types
 
@@ -55,6 +65,20 @@ Process inbound goods from purchase orders, transfers, and returns through recei
 - Quantity mismatch: record actual received; flag discrepancy for supplier follow-up.
 - Items pending inspection: quality hold blocks put-away until inspection passes.
 - Unknown SKU on receipt: verify PO line items match product catalog.
+- Put-away location full: assign an alternate location or expand bin capacity.
+
+## Error Codes
+
+- `RECEIPT_QTY_MISMATCH`: Received quantity does not match the expected PO line quantity.
+- `PUTAWAY_LOCATION_FULL`: Target put-away location has no remaining capacity; assign an alternate bin.
+- `RECEIPT_SKU_UNKNOWN`: SKU on the receipt does not match any line item on the linked purchase order.
+
+## Related Skills
+
+- **commerce-warehouse**: Put-away tasks place received goods into warehouse locations.
+- **commerce-quality**: Route received items through quality inspection before put-away.
+- **commerce-backorders**: Received inventory can be allocated to open backorders.
+- **commerce-accounts-payable**: Match receipts to supplier bills for three-way matching.
 
 ## References
 - references/receiving-flow.md

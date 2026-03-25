@@ -21,6 +21,14 @@ Inspect the commerce event log, manage the outbox for sync, and handle idempoten
 - MCP tools: `list_events`, `get_event`, `list_outbox`, `acknowledge_event`, `get_idempotency_key`, `create_idempotency_key`.
 - Read-only operations do not require `--apply`.
 
+## Examples
+
+```bash
+stateset-events list --entity-type order --since 2025-01-01
+stateset-events inspect evt_001 --include-payload
+stateset-events outbox --status pending --limit 20
+```
+
 ## Event Fields
 
 - `event_id`: Unique event identifier (UUID)
@@ -40,11 +48,14 @@ Inspect the commerce event log, manage the outbox for sync, and handle idempoten
 
 ## Idempotency Keys
 
-Prevent duplicate operations:
-- Key is a unique string per operation (e.g., `create_order_ORD-123`)
-- If the key already exists, the original result is returned
-- Keys expire after a configurable TTL
-- Critical for retry safety in distributed systems
+- Key is a unique string per operation (e.g., `create_order_ORD-123`); if it exists, the original result is returned.
+- Keys expire after a configurable TTL. Critical for retry safety in distributed systems.
+
+## Status Flows
+
+**Outbox Event:** Pending -> Synced -> Acknowledged (or Failed)
+**Idempotency Key:** Active -> Expired (or Consumed)
+**Event:** Created -> Delivered -> Processed (or Failed)
 
 ## Output
 
@@ -65,6 +76,18 @@ Prevent duplicate operations:
 - Duplicate operation: look up existing idempotency key for the operation.
 - Missing events: verify event type filter and time range.
 - Signature invalid: check Ed25519 key configuration.
+
+## Error Codes
+
+- `EVENT_SYNC_FAILED`: Outbox event failed to sync to the sequencer after retries.
+- `EVENT_DUPLICATE_KEY`: An idempotency key already exists for this operation.
+- `EVENT_SIGNATURE_INVALID`: Ed25519 agent signature verification failed for the event.
+
+## Related Skills
+
+- commerce-sync — push outbox events to the sequencer
+- commerce-orders — order events in the audit trail
+- commerce-autonomous-engine — event-driven workflow triggers
 
 ## References
 - references/event-types.md
