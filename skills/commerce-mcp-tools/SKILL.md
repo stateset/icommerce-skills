@@ -27,6 +27,11 @@ Use this skill when you need to:
 - Verify parameter names and shapes.
 - Debug tool failures.
 
+## Permissions
+
+- Read: `get_*`, `list_*`, `mcp list-tools`, `mcp validate` — no `--apply` needed.
+- Write: `create_*`, `update_*`, `delete_*` — requires `--apply`.
+
 ## Examples
 
 ```bash

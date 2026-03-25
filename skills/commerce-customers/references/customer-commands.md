@@ -43,3 +43,10 @@ stateset-direct customers create <email> <name>
 | `created_at` | datetime | Record creation time |
 | `order_count` | number | Total orders placed |
 | `total_spent` | number | Lifetime spending |
+| `tags` | string[] | Customer tags |
+| `notes` | string | Internal notes |
+
+## Deduplication
+
+When creating customers, check for existing records by `email` first.
+Use `merge_customers` to combine duplicates — the target record keeps all orders and history.

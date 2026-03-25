@@ -21,6 +21,11 @@ Orchestrate outbound order fulfillment through wave planning, picking, packing, 
 - Writes require `--apply`.
 - MCP tools: `create_wave`, `list_waves`, `release_wave`, `create_pick_task`, `complete_pick`, `create_pack_task`, `add_carton`, `create_ship_task`, `complete_ship`.
 
+## Permissions
+
+- Read: `list_waves` — no `--apply` needed.
+- Write: `create_wave`, `release_wave`, `complete_pick`, `add_carton`, `complete_ship` — requires `--apply`.
+
 ## Examples
 
 ```bash
@@ -76,6 +81,12 @@ stateset fulfillment complete-ship SHIP-0018 --carrier UPS --tracking 1Z999AA101
 - `FULFILL_SHORT_PICK`: Item not found at expected location; inventory adjustment required.
 - `FULFILL_WAVE_INCOMPLETE`: Wave cannot complete because one or more pick tasks are still pending.
 - `FULFILL_CARTON_OVERWEIGHT`: Carton exceeds maximum weight limit; split items across cartons.
+
+## Related Skills
+
+- commerce-inventory — stock consumed during picking
+- commerce-shipments — shipping handoff after pack/ship completion
+- commerce-warehouse — location data for pick tasks
 
 ## References
 - references/fulfillment-flow.md

@@ -21,6 +21,11 @@ Track warranty coverage and process claims through resolution.
 - Writes require `--apply`.
 - MCP tools: `list_warranties`, `create_warranty`, `create_warranty_claim`, `approve_warranty_claim`, `deny_warranty_claim`.
 
+## Permissions
+
+- **Read:** `list_warranties` — no `--apply` needed.
+- **Write:** `create_warranty`, `create_warranty_claim`, `approve_warranty_claim`, `deny_warranty_claim` — requires `--apply`.
+
 ## Examples
 
 ```bash

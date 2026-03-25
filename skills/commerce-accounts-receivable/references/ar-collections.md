@@ -56,3 +56,13 @@ Complete account summary including:
 - Running balance
 - Closing balance
 - Aging summary
+
+## Common Commands
+
+```bash
+stateset ar aging --as-of 2025-03-31
+stateset ar customer-aging --customer cust_123
+stateset ar statement --customer cust_123 --period 2025-Q1
+stateset --apply "ar credit-memo create --customer cust_123 --amount 250 --reason ReturnedGoods"
+stateset --apply "ar write-off --invoice inv_456 --amount 100 --approver admin_01"
+```

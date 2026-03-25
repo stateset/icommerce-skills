@@ -26,6 +26,11 @@ Coordinate cross-domain customer support workflows.
 - CLI: use `stateset` in natural language with `--apply` for writes.
 - MCP tools span customers, orders, products, inventory, returns, and carts.
 
+## Permissions
+
+- Read: lookups across customers, orders, returns, carts — no `--apply` needed.
+- Write: `returns create`, `refund issue`, ticket updates — requires `--apply`.
+
 ## Examples
 
 ```bash

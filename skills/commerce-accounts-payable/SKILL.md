@@ -21,6 +21,11 @@ Track supplier bills, process payments, run payment batches, and monitor AP agin
 - Writes require `--apply`.
 - MCP tools: `list_bills`, `create_bill`, `approve_bill`, `record_bill_payment`, `create_payment_run`, `approve_payment_run`, `get_ap_aging`, `get_ap_summary`.
 
+## Permissions
+
+- Read: `list_bills`, `get_ap_aging`, `get_ap_summary` — no `--apply` needed.
+- Write: `create_bill`, `approve_bill`, `record_bill_payment`, `create_payment_run`, `approve_payment_run` — requires `--apply`.
+
 ## Examples
 
 ```bash

@@ -21,6 +21,11 @@ Track shipment creation, carrier assignments, and delivery events.
 - Writes require `--apply`.
 - MCP tools: `list_shipments`, `create_shipment`, `deliver_shipment`, `ship_order`, `update_tracking`.
 
+## Permissions
+
+- **Read:** `list_shipments` — no `--apply` needed.
+- **Write:** `create_shipment`, `deliver_shipment`, `ship_order`, `update_tracking` — requires `--apply`.
+
 ## Examples
 
 ```bash

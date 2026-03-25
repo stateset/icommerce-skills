@@ -21,6 +21,11 @@ Generate revenue, customer, and inventory insights with trend analysis and forec
 - Writes require `--apply` for saving snapshots.
 - MCP tools: `get_sales_summary`, `get_top_products`, `get_customer_metrics`, `get_inventory_health`, `get_demand_forecast`, `get_revenue_forecast`.
 
+## Permissions
+
+- Read: `get_sales_summary`, `get_top_products`, `get_customer_metrics`, `get_inventory_health`, `get_demand_forecast`, `get_revenue_forecast` — no `--apply` needed.
+- Write: saving report snapshots — requires `--apply`.
+
 ## Examples
 
 ```bash

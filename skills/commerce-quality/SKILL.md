@@ -22,6 +22,11 @@ Run quality inspections, track non-conformances, and place quality holds on inve
 - Writes require `--apply`.
 - MCP tools: `create_inspection`, `list_inspections`, `record_inspection_result`, `create_ncr`, `update_ncr`, `create_quality_hold`, `release_quality_hold`.
 
+## Permissions
+
+- Read: `list_inspections` — no `--apply` needed.
+- Write: `create_inspection`, `record_inspection_result`, `create_ncr`, `update_ncr`, `create_quality_hold`, `release_quality_hold` — requires `--apply`.
+
 ## Examples
 
 ```bash

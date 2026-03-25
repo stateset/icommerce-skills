@@ -21,6 +21,11 @@ Create bills of materials (BOMs) and run work orders for production.
 - Writes require `--apply`.
 - MCP tools: `create_bom`, `add_bom_component`, `activate_bom`, `create_work_order`, `start_work_order`, `complete_work_order`.
 
+## Permissions
+
+- **Read:** (no read-only tools; all operations modify state)
+- **Write:** `create_bom`, `add_bom_component`, `activate_bom`, `create_work_order`, `start_work_order`, `complete_work_order` — requires `--apply`.
+
 ## Examples
 
 ```bash

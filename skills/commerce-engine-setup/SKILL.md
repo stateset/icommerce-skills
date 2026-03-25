@@ -30,6 +30,11 @@ Set up local iCommerce runtime, CLI tooling, and optional sync.
 - Verify setup: `bash /mnt/skills/user/commerce-engine-setup/scripts/verify-setup.sh`
 - Start autonomous mode: `stateset-autonomous start --db ./.stateset/commerce.db`
 
+## Permissions
+
+- Read: `stateset-doctor`, `list_customers`, `list_products`, `list_orders` — no `--apply` needed.
+- Write: `seed-demo.sh`, `stateset-autonomous start`, DB init — requires `--apply`.
+
 ## Examples
 
 ```bash

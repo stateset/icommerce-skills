@@ -21,6 +21,11 @@ Process inbound goods from purchase orders, transfers, and returns through recei
 - Writes require `--apply`.
 - MCP tools: `create_receipt`, `list_receipts`, `get_receipt`, `receive_items`, `create_put_away`, `complete_put_away`.
 
+## Permissions
+
+- Read: `list_receipts`, `get_receipt` — no `--apply` needed.
+- Write: `create_receipt`, `receive_items`, `create_put_away`, `complete_put_away` — requires `--apply`.
+
 ## Examples
 
 ```bash

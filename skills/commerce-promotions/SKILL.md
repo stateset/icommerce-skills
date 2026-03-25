@@ -21,6 +21,11 @@ Manage promotions, coupons, and cart discounts.
 - Writes require `--apply`.
 - MCP tools: `create_promotion`, `activate_promotion`, `deactivate_promotion`, `create_coupon`, `validate_coupon`, `apply_cart_promotions`.
 
+## Permissions
+
+- **Read:** `validate_coupon` — no `--apply` needed.
+- **Write:** `create_promotion`, `activate_promotion`, `deactivate_promotion`, `create_coupon`, `apply_cart_promotions` — requires `--apply`.
+
 ## Examples
 
 ```bash

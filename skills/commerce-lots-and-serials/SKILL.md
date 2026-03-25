@@ -31,6 +31,11 @@ Track product batches with lot numbers and expiration dates, and manage individu
 - MCP tools (Lots): `create_lot`, `list_lots`, `get_lot`, `consume_lot`, `adjust_lot`, `transfer_lot`, `split_lot`, `merge_lots`, `quarantine_lot`, `release_quarantine`, `add_lot_certificate`, `trace_lot`, `get_expiring_lots`.
 - MCP tools (Serials): `create_serial`, `bulk_create_serials`, `list_serials`, `get_serial`, `mark_serial_sold`, `mark_serial_shipped`, `reserve_serial`, `release_serial_reservation`, `transfer_serial_ownership`, `lookup_serial`, `validate_serial`, `get_available_serials`.
 
+## Permissions
+
+- Read: `list_lots`, `get_lot`, `trace_lot`, `get_expiring_lots`, `list_serials`, `get_serial`, `lookup_serial` — no `--apply` needed.
+- Write: `create_lot`, `consume_lot`, `quarantine_lot`, `create_serial`, `bulk_create_serials`, `mark_serial_sold` — requires `--apply`.
+
 ## Examples
 
 ```bash
@@ -42,8 +47,7 @@ stateset serials bulk-create --sku WIDGET-PRO --prefix SN-W001 --count 100 --app
 ## Statuses
 
 - **Lot:** Active, Consumed, Expired, Quarantine, Transferred
-- **Serial:** Available, Reserved, Sold, Shipped, InService, Returned, Repaired, Quarantine, Scrapped, Unknown
-- **Certificates:** COA (Analysis), COC (Compliance), MSDS (Safety Data Sheet)
+- **Serial:** Available, Reserved, Sold, Shipped, InService, Returned, Repaired, Quarantine, Scrapped
 
 ## Status Flows
 
@@ -89,5 +93,3 @@ stateset serials bulk-create --sku WIDGET-PRO --prefix SN-W001 --count 100 --app
 - references/traceability.md
 - /home/dom/stateset-icommerce/crates/stateset-core/src/models/lots.rs
 - /home/dom/stateset-icommerce/crates/stateset-core/src/models/serials.rs
-- /home/dom/stateset-icommerce/crates/stateset-embedded/src/lots.rs
-- /home/dom/stateset-icommerce/crates/stateset-embedded/src/serials.rs

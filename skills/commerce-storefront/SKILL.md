@@ -21,6 +21,11 @@ Scaffold storefronts and add commerce features using StateSet tools.
 - MCP tools: scaffold MCP server for adding pages/components.
 - Keep database path in `.env` and use `@stateset/embedded` on the server.
 
+## Permissions
+
+- Read: `stateset-create --list`, scaffold preview — no `--apply` needed.
+- Write: `stateset-create`, `add-page`, `seed` — requires `--apply`.
+
 ## Examples
 
 ```bash
@@ -42,7 +47,7 @@ stateset storefront dev --project my-storefront --port 3000
 ## Output
 
 ```json
-{"status":"created","project":"my-storefront","template":"nextjs","path":"/home/user/my-storefront","pages":["index","products","cart","checkout"]}
+{"status":"created","project":"my-storefront","template":"nextjs","path":"/home/user/my-storefront","pages":["index","products","cart","checkout"],"db_path":"./commerce.db","api_key_status":"configured"}
 ```
 
 ## Present Results to User

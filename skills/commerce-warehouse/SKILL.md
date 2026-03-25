@@ -21,6 +21,11 @@ Manage warehouse facilities, location hierarchies, and inventory movements acros
 - Writes require `--apply`.
 - MCP tools: `list_warehouses`, `get_warehouse`, `create_warehouse`, `update_warehouse`, `list_locations`, `get_location`, `create_location`, `get_location_inventory`, `adjust_location_inventory`, `move_inventory`, `list_movements`.
 
+## Permissions
+
+- Read: `list_warehouses`, `get_warehouse`, `list_locations`, `get_location`, `get_location_inventory`, `list_movements` — no `--apply` needed.
+- Write: `create_warehouse`, `update_warehouse`, `create_location`, `adjust_location_inventory`, `move_inventory` — requires `--apply`.
+
 ## Examples
 
 ```bash

@@ -22,6 +22,11 @@ Track customer receivables, manage collections, issue credit memos, and monitor 
 - Writes require `--apply`.
 - MCP tools: `get_ar_aging`, `get_customer_ar_aging`, `log_collection_activity`, `create_credit_memo`, `apply_credit_memo`, `apply_payment_to_invoice`, `create_write_off`, `get_customer_statement`, `get_customer_ar_summary`.
 
+## Permissions
+
+- Read: `get_ar_aging`, `get_customer_ar_aging`, `get_customer_statement`, `get_customer_ar_summary` — no `--apply` needed.
+- Write: `log_collection_activity`, `create_credit_memo`, `apply_credit_memo`, `apply_payment_to_invoice`, `create_write_off` — requires `--apply`.
+
 ## Examples
 
 ```bash

@@ -27,6 +27,11 @@ Use this runbook when:
 - Approval queues are growing.
 - You need to disable scheduling or webhooks.
 
+## Permissions
+
+- Read: `get_autonomous_status`, `list_job_runs` — no `--apply` needed.
+- Write: `approve_job`, `disable_scheduler`, `pause`, `retry-webhook` — requires `--apply`.
+
 ## Examples
 
 ```bash

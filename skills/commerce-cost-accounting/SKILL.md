@@ -23,6 +23,11 @@ Track item costs using multiple costing methods, manage cost layers, analyze var
 - Writes require `--apply`.
 - MCP tools: `set_item_cost`, `get_item_cost`, `list_item_costs`, `create_cost_layer`, `issue_from_cost_layer`, `record_cost_variance`, `create_cost_adjustment`, `approve_cost_adjustment`, `rollup_bom_cost`, `get_inventory_valuation`, `get_sku_cost_summary`.
 
+## Permissions
+
+- Read: `get_item_cost`, `list_item_costs`, `get_inventory_valuation`, `get_sku_cost_summary` — no `--apply` needed.
+- Write: `set_item_cost`, `create_cost_layer`, `issue_from_cost_layer`, `record_cost_variance`, `rollup_bom_cost` — requires `--apply`.
+
 ## Examples
 
 ```bash
@@ -39,15 +44,6 @@ stateset cost valuation --warehouse WH-EAST --as-of 2025-06-30
 - **LIFO**: Last In, First Out (consume newest first)
 - **Standard**: Predetermined cost with variance tracking
 - **Specific**: Individual unit cost identification
-
-## Variance Types
-
-- Purchase: actual vs standard purchase price
-- Material: actual vs standard material usage
-- Labor: actual vs standard labor cost
-- Overhead: actual vs standard overhead
-- Efficiency: actual vs standard quantity
-- Volume: over/under absorption of fixed costs
 
 ## Status Flows
 

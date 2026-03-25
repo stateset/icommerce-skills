@@ -21,6 +21,11 @@ Handle exchange rates and currency settings for global commerce operations.
 - Writes require `--apply`.
 - MCP tools: `get_exchange_rate`, `list_exchange_rates`, `convert_currency`, `set_exchange_rate`, `set_base_currency`, `enable_currencies`, `format_currency`.
 
+## Permissions
+
+- Read: `get_exchange_rate`, `list_exchange_rates`, `convert_currency`, `format_currency` — no `--apply` needed.
+- Write: `set_exchange_rate`, `set_base_currency`, `enable_currencies` — requires `--apply`.
+
 ## Examples
 
 ```bash

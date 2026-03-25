@@ -27,6 +27,11 @@ Synchronize local events with the sequencer using VES.
 - Skill scripts: `bash /mnt/skills/user/commerce-sync/scripts/sync-status.sh`, `bash /mnt/skills/user/commerce-sync/scripts/sync-push.sh`, `bash /mnt/skills/user/commerce-sync/scripts/sync-pull.sh`.
 - MCP tools: `sync_status`, `sync_push`, `sync_pull`, `sync_outbox`, `sync_conflicts`, `sync_resolve`.
 
+## Permissions
+
+- Read: `sync_status`, `sync_outbox`, `sync_conflicts` — no `--apply` needed.
+- Write: `sync_push`, `sync_pull`, `sync_resolve` — requires `--apply`.
+
 ## Examples
 
 ```bash

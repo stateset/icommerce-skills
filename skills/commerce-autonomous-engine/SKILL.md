@@ -27,6 +27,11 @@ Operate the autonomous engine that runs scheduled jobs, workflows, policies, and
 - Skill script: `bash /mnt/skills/user/commerce-autonomous-engine/scripts/autonomous-status.sh`.
 - MCP tools: `list_scheduled_jobs`, `create_scheduled_job`, `run_job_now`, `list_workflows`, `list_policies`, `list_pending_approvals`.
 
+## Permissions
+
+- Read: `list_scheduled_jobs`, `list_workflows`, `list_policies`, `list_pending_approvals` — no `--apply` needed.
+- Write: `create_scheduled_job`, `run_job_now` — requires `--apply`.
+
 ## Examples
 
 ```bash

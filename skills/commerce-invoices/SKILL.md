@@ -21,6 +21,11 @@ Create invoices, send to customers, and record payments.
 - Writes require `--apply`.
 - MCP tools: `list_invoices`, `create_invoice`, `send_invoice`, `record_invoice_payment`, `get_overdue_invoices`.
 
+## Permissions
+
+- **Read:** `list_invoices`, `get_overdue_invoices` — no `--apply` needed.
+- **Write:** `create_invoice`, `send_invoice`, `record_invoice_payment` — requires `--apply`.
+
 ## Examples
 
 ```bash

@@ -22,6 +22,11 @@ Double-entry accounting with chart of accounts, journal entries, period manageme
 - Writes require `--apply`.
 - MCP tools: `list_gl_accounts`, `create_gl_account`, `update_gl_account`, `list_gl_periods`, `create_gl_period`, `close_gl_period`, `create_journal_entry`, `post_journal_entry`, `void_journal_entry`, `get_trial_balance`, `get_balance_sheet`, `get_income_statement`, `configure_auto_posting`.
 
+## Permissions
+
+- Read: `list_gl_accounts`, `list_gl_periods`, `get_trial_balance`, `get_balance_sheet`, `get_income_statement` — no `--apply` needed.
+- Write: `create_gl_account`, `create_journal_entry`, `post_journal_entry`, `void_journal_entry`, `close_gl_period` — requires `--apply`.
+
 ## Examples
 
 ```bash

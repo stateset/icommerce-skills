@@ -27,6 +27,11 @@ Handle order creation, status transitions, and fulfillment updates.
 - Writes require `--apply`.
 - MCP tools: `list_orders`, `get_order`, `create_order`, `update_order_status`, `ship_order`, `cancel_order`.
 
+## Permissions
+
+- **Read:** `list_orders`, `get_order` — no `--apply` needed.
+- **Write:** `create_order`, `update_order_status`, `ship_order`, `cancel_order` — requires `--apply`.
+
 ## Examples
 
 ```bash

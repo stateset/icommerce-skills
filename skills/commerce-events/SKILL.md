@@ -21,6 +21,11 @@ Inspect the commerce event log, manage the outbox for sync, and handle idempoten
 - MCP tools: `list_events`, `get_event`, `list_outbox`, `acknowledge_event`, `get_idempotency_key`, `create_idempotency_key`.
 - Read-only operations do not require `--apply`.
 
+## Permissions
+
+- Read: `list_events`, `get_event`, `list_outbox`, `get_idempotency_key` — no `--apply` needed.
+- Write: `acknowledge_event`, `create_idempotency_key` — requires `--apply`.
+
 ## Examples
 
 ```bash
@@ -28,28 +33,6 @@ stateset-events list --entity-type order --since 2025-01-01
 stateset-events inspect evt_001 --include-payload
 stateset-events outbox --status pending --limit 20
 ```
-
-## Event Fields
-
-- `event_id`: Unique event identifier (UUID)
-- `event_type`: Operation type (e.g., order.created, inventory.adjusted)
-- `entity_type` / `entity_id`: Affected entity
-- `payload`: Full event data (JSON)
-- `agent_signature`: Ed25519 signature for authenticity
-- `created_at`: Event timestamp
-- `sequence_number`: Deterministic ordering
-
-## Outbox States
-
-- Pending: awaiting sync to sequencer
-- Synced: successfully pushed to sequencer
-- Failed: sync attempt failed (will retry)
-- Acknowledged: confirmed by sequencer
-
-## Idempotency Keys
-
-- Key is a unique string per operation (e.g., `create_order_ORD-123`); if it exists, the original result is returned.
-- Keys expire after a configurable TTL. Critical for retry safety in distributed systems.
 
 ## Status Flows
 

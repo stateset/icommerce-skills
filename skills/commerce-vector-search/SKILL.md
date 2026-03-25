@@ -22,6 +22,11 @@ Hybrid semantic and keyword search across commerce entities using OpenAI embeddi
 - Embedding model: OpenAI `text-embedding-3-small` (1536 dimensions).
 - BM25 full-text via SQLite FTS5.
 
+## Permissions
+
+- Read: `search_products`, `search_customers`, `search_orders`, `search_inventory`, `get_embedding_stats` — no `--apply` needed.
+- Write: embedding generation for new/updated entities — requires `--apply`.
+
 ## Examples
 
 ```bash

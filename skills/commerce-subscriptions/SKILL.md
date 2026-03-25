@@ -21,6 +21,11 @@ Handle recurring billing plans and customer subscriptions.
 - Writes require `--apply`.
 - MCP tools: `create_subscription_plan`, `create_subscription`, `pause_subscription`, `resume_subscription`, `cancel_subscription`, `skip_billing_cycle`, `list_billing_cycles`.
 
+## Permissions
+
+- **Read:** `list_billing_cycles` — no `--apply` needed.
+- **Write:** `create_subscription_plan`, `create_subscription`, `pause_subscription`, `resume_subscription`, `cancel_subscription`, `skip_billing_cycle` — requires `--apply`.
+
 ## Examples
 
 ```bash

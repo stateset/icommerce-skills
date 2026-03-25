@@ -21,6 +21,11 @@ Calculate taxes and manage tax jurisdiction settings.
 - Writes require `--apply`.
 - MCP tools: `calculate_tax`, `calculate_cart_tax`, `get_tax_rate`, `list_tax_rates`, `create_tax_exemption`, `validate_tax_exemption`.
 
+## Permissions
+
+- **Read:** `calculate_tax`, `calculate_cart_tax`, `get_tax_rate`, `list_tax_rates`, `validate_tax_exemption` — no `--apply` needed.
+- **Write:** `create_tax_exemption` — requires `--apply`.
+
 ## Examples
 
 ```bash

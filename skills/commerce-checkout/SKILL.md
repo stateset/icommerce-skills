@@ -21,6 +21,11 @@ Run cart creation and checkout flows from start to finish.
 - Writes require `--apply`.
 - MCP tools: `create_cart`, `add_cart_item`, `update_cart_item`, `remove_cart_item`, `set_cart_shipping_address`, `set_cart_payment`, `apply_cart_discount`, `get_shipping_rates`, `complete_checkout`.
 
+## Permissions
+
+- **Read:** `get_shipping_rates` — no `--apply` needed.
+- **Write:** `create_cart`, `add_cart_item`, `update_cart_item`, `remove_cart_item`, `set_cart_shipping_address`, `set_cart_payment`, `apply_cart_discount`, `complete_checkout` — requires `--apply`.
+
 ## Examples
 
 ```bash

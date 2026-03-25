@@ -21,6 +21,12 @@ Handle supplier records and purchase order workflows for procurement.
 - Writes require `--apply`.
 - MCP tools: `list_suppliers`, `create_supplier`, `create_purchase_order`, `approve_purchase_order`, `send_purchase_order`, `acknowledge_purchase_order`.
 
+## Permissions
+
+- **Read:** `list_suppliers` — no `--apply` needed.
+- **Write:** `create_supplier`, `create_purchase_order`, `send_purchase_order`, `acknowledge_purchase_order` — requires `--apply`.
+- **Admin:** `approve_purchase_order` — requires `--apply` and approval authority.
+
 ## Examples
 
 ```bash

@@ -21,6 +21,11 @@ Process returns from request through approval and refund or exchange.
 - Writes require `--apply`.
 - MCP tools: `list_returns`, `get_return`, `create_return`, `approve_return`, `reject_return`, `receive_return`.
 
+## Permissions
+
+- **Read:** `list_returns`, `get_return` — no `--apply` needed.
+- **Write:** `create_return`, `approve_return`, `reject_return`, `receive_return` — requires `--apply`.
+
 ## Examples
 
 ```bash

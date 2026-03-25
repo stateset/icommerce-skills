@@ -26,6 +26,11 @@ Manage customer identity and profile data used across orders, carts, and analyti
 - Writes require `--apply`.
 - MCP tools: `list_customers`, `get_customer`, `create_customer`.
 
+## Permissions
+
+- **Read:** `list_customers`, `get_customer` — no `--apply` needed.
+- **Write:** `create_customer`, `merge_customers` — requires `--apply`.
+
 ## Examples
 
 ```bash

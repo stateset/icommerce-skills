@@ -45,3 +45,5 @@ stateset --apply "enable currencies EUR GBP JPY"
 - Always use correct decimal precision per currency when displaying or storing amounts.
 - Changing the base currency does not automatically recalculate existing prices.
 - Rates are stored as directional pairs (USD->EUR is separate from EUR->USD).
+- Rate staleness threshold is configurable per store; default is 24 hours.
+- Use `format_currency` to apply locale-specific symbols and grouping separators.

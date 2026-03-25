@@ -21,6 +21,11 @@ Manage product catalog entries and variants for storefront and order flows.
 - Writes require `--apply`.
 - MCP tools: `list_products`, `get_product`, `get_product_variant`, `create_product`, `update_product`, `create_product_variant`.
 
+## Permissions
+
+- **Read:** `list_products`, `get_product`, `get_product_variant` — no `--apply` needed.
+- **Write:** `create_product`, `update_product`, `create_product_variant` — requires `--apply`.
+
 ## Examples
 
 ```bash

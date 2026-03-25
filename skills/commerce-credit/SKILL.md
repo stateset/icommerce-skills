@@ -22,6 +22,11 @@ Manage customer credit limits, perform credit checks, process credit application
 - Writes require `--apply`.
 - MCP tools: `create_credit_account`, `get_credit_account`, `update_credit_account`, `check_credit`, `place_credit_hold`, `release_credit_hold`, `submit_credit_application`, `review_credit_application`, `record_credit_transaction`, `get_customer_credit_summary`.
 
+## Permissions
+
+- Read: `get_credit_account`, `check_credit`, `get_customer_credit_summary` — no `--apply` needed.
+- Write: `create_credit_account`, `update_credit_account`, `place_credit_hold`, `release_credit_hold`, `submit_credit_application` — requires `--apply`.
+
 ## Examples
 
 ```bash

@@ -45,4 +45,17 @@ stateset-autonomous jobs run JOB-001
 
 # List pending approvals
 stateset-autonomous approvals list
+
+# Approve a pending request
+stateset-autonomous approvals approve REQ-001
 ```
+
+## Health Check Output
+
+| Field | Description |
+|-------|-------------|
+| `status` | Engine status (running, degraded, stopped) |
+| `scheduler` | Scheduler state (enabled, disabled) |
+| `active_jobs` | Number of currently running jobs |
+| `pending_approvals` | Approvals awaiting action |
+| `uptime_seconds` | Time since engine start |

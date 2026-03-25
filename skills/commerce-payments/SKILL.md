@@ -21,6 +21,11 @@ Create, complete, and refund payments for orders.
 - Writes require `--apply`.
 - MCP tools: `list_payments`, `get_payment`, `create_payment`, `complete_payment`, `fail_payment`, `create_refund`.
 
+## Permissions
+
+- **Read:** `list_payments`, `get_payment` — no `--apply` needed.
+- **Write:** `create_payment`, `complete_payment`, `fail_payment`, `create_refund` — requires `--apply`.
+
 ## Examples
 
 ```bash

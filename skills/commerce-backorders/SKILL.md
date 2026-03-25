@@ -21,6 +21,11 @@ Track unfulfilled demand, allocate incoming inventory, and prioritize backorder 
 - Writes require `--apply`.
 - MCP tools: `list_backorders`, `create_backorder`, `update_backorder`, `allocate_backorder`, `fulfill_backorder`, `cancel_backorder`, `get_backorder_summary`, `get_sku_backorder_summary`.
 
+## Permissions
+
+- Read: `list_backorders`, `get_backorder_summary`, `get_sku_backorder_summary` — no `--apply` needed.
+- Write: `create_backorder`, `update_backorder`, `allocate_backorder`, `fulfill_backorder`, `cancel_backorder` — requires `--apply`.
+
 ## Examples
 
 ```bash

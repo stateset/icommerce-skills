@@ -29,6 +29,11 @@ Use the embedded engine from application code via language bindings.
 - MCP tools: all commerce tools use the embedded SDK as the data layer.
 - See language examples under `/home/dom/stateset-icommerce/examples/`
 
+## Permissions
+
+- Read: `list_products`, `list_customers`, `list_orders`, `version()` — no `--apply` needed.
+- Write: `create_order`, `update_customer`, sync push — requires `--apply`.
+
 ## Examples
 
 ```bash

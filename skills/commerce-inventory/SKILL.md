@@ -21,6 +21,11 @@ Track stock levels, reservations, and adjustments across locations.
 - Writes require `--apply`.
 - MCP tools: `get_stock`, `create_inventory_item`, `adjust_inventory`, `reserve_inventory`, `confirm_reservation`, `release_reservation`.
 
+## Permissions
+
+- **Read:** `get_stock` — no `--apply` needed.
+- **Write:** `create_inventory_item`, `adjust_inventory`, `reserve_inventory`, `confirm_reservation`, `release_reservation` — requires `--apply`.
+
 ## Examples
 
 ```bash
